@@ -1,0 +1,47 @@
+import { contextBridge, ipcRenderer } from "electron";
+
+contextBridge.exposeInMainWorld("api", {
+  logAction: (msg: string) => ipcRenderer.invoke("log-ui-action", msg),
+  openLogFile: () => ipcRenderer.invoke("open-log-file"),
+  quitApp: () => ipcRenderer.invoke("quit-app"),
+  getBackups: () => ipcRenderer.invoke("get-backups"),
+  openBackupFolder: () => ipcRenderer.invoke("open-backup-folder"),
+  restoreBackup: (filename: string) =>
+    ipcRenderer.invoke("restore-backup", filename),
+
+  getSituazione: () => ipcRenderer.invoke("get-situazione"),
+  addMovimentoFondo: (data: any) =>
+    ipcRenderer.invoke("add-movimento-fondo", data),
+  getMovimentiFondo: () => ipcRenderer.invoke("get-movimenti-fondo"),
+  toggleDashboardVisibility: (uid: string) =>
+    ipcRenderer.invoke("toggle-dashboard-visibility", uid),
+  deleteMovimentoFondo: (id: number) =>
+    ipcRenderer.invoke("delete-movimento-fondo", id),
+
+  triggerManualBackup: () => ipcRenderer.invoke("trigger-manual-backup"),
+  resetAnnualData: () => ipcRenderer.invoke("reset-annual-data"),
+  hardResetDB: () => ipcRenderer.invoke("hard-reset-db"),
+
+  getMembri: () => ipcRenderer.invoke("get-membri"),
+  addMembro: (m: any) => ipcRenderer.invoke("add-membro", m),
+  updateMembro: (id: number, m: any) =>
+    ipcRenderer.invoke("update-membro", { id, membro: m }),
+  deleteMembro: (id: number) => ipcRenderer.invoke("delete-membro", id),
+  deleteAllMembri: () => ipcRenderer.invoke("delete-all-membri"),
+  importMembriExcel: (path: string) =>
+    ipcRenderer.invoke("import-membri-excel", path),
+  exportMembri: () => ipcRenderer.invoke("export-membri"),
+
+  createAcquisto: (data: any) => ipcRenderer.invoke("create-acquisto", data),
+  updateAcquisto: (data: any) => ipcRenderer.invoke("update-acquisto", data),
+  deleteAcquisto: (id: number) => ipcRenderer.invoke("delete-acquisto", id),
+  getAcquisti: () => ipcRenderer.invoke("get-acquisti"),
+  getQuote: (id: number) => ipcRenderer.invoke("get-quote", id),
+  updateQuota: (data: any) => ipcRenderer.invoke("update-quota", data),
+  completaAcquisto: (id: number) => ipcRenderer.invoke("completa-acquisto", id),
+
+  exportDebtors: (params: any) => ipcRenderer.invoke("export-debtors", params),
+  selectFile: () => ipcRenderer.invoke("select-file"),
+  analyzeExcelBank: (path: string) =>
+    ipcRenderer.invoke("analyze-excel-bank", path),
+});
